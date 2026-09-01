@@ -1,0 +1,14 @@
+mat-toolbar{
+   display: flex;
+    flex-wrap: wrap;
+    /* height: 20%; */
+    justify-content: center;
+    div{
+        margin: left 80px; ;
+    }
+.logo{
+    width: 5rem;
+}
+
+
+}
