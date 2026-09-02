@@ -3,11 +3,13 @@ mat-toolbar{
     flex-wrap: wrap;
     /* height: 20%; */
     justify-content: center;
+    background: transparent;
     div{
-        margin: left 80px; ;
+        gap: 2px;
     }
 .logo{
     width: 5rem;
+    margin-right: 50px;
 }
 
 
