@@ -8,15 +8,16 @@ export const routes: Routes = [
     loadComponent: () => import('./features/home/home').then((m) => m.Home),
   },
   {
-    path: 'sobre-nos',
-    loadComponent: () => import('./features/sobre-nos/sobre-nos').then((m) => m.SobreNos),
-  },
-  {
-    path: 'Produtos',
+    path: 'produtos',
     loadComponent: () => import('./features/produtos/produtos').then((m) => m.Produtos),
   },
   {
-    path: '',
+    path: 'sobre-nos',
+    loadComponent: () => import('./features/sobre-nos/sobre-nos').then((m) => m.SobreNos),
+  },
+  
+  {
+    path: 'conta',
     loadComponent: () => import('./features/conta/conta').then((m) => m.Conta)
   }
   

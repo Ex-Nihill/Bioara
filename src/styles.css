@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 app-root{
-    background-color: rgb(126, 84, 40);
+    background:#6d9f86;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    
     justify-content: space-between;
 }
