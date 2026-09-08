@@ -1,0 +1,65 @@
+<section class="produtos-page" [class.promocoes-page]="paginaPromocoes">
+	@if (!paginaPromocoes) {
+	<div class="banner">
+		<div class="banner-copy">
+			<p class="eyebrow">Bioara botanicals</p>
+			<h1>Beleza que nasce da natureza</h1>
+			<p>Cuidados essenciais feitos para a sua rotina.</p>
+		</div>
+	</div>
+	}
+
+	<label class="search-box" [class.search-box-promocoes]="paginaPromocoes">
+		<span aria-hidden="true">&#128269;</span>
+		<input
+			type="search"
+			placeholder="Pesquisar produto..."
+			aria-label="Pesquisar produto"
+			[(ngModel)]="termoBusca"
+		/>
+	</label>
+
+	@if (!paginaPromocoes) {
+	<section class="content-section categories-section" aria-labelledby="categorias-title">
+		<h2 id="categorias-title">Navegue nestas categorias populares</h2>
+		<div class="category-grid">
+			@for (categoria of categorias; track categoria.nome) {
+				<button
+					class="category-card"
+					[class.category-card-selected]="termoBusca === categoria.nome"
+					type="button"
+					(click)="selecionarCategoria(categoria.nome)"
+				>
+					<img [src]="categoria.imagem" [alt]="categoria.nome" />
+					<span>{{ categoria.nome }}</span>
+				</button>
+			}
+		</div>
+	</section>
+	}
+
+	<section class="content-section popular-section" aria-labelledby="populares-title">
+		<h2 id="populares-title">{{ paginaPromocoes ? 'Ofertas imperdíveis' : 'Produtos populares' }}</h2>
+		<div class="product-grid">
+			@for (produto of produtosExibidos; track produto.nome) {
+				<article class="product-card">
+					<a class="offer-tag" routerLink="/promocoes">Oferta imperdível!</a>
+					<img [src]="produto.imagem" [alt]="produto.nome" />
+					<div class="product-info">
+						<p>{{ produto.categoria }}</p>
+						<h3>{{ produto.nome }}</h3>
+						<s class="original-price">{{ produto.precoOriginal }}</s>
+						<strong>{{ produto.preco }}</strong>
+					</div>
+				</article>
+			} @empty {
+				<p class="empty-state">Nenhum produto encontrado.</p>
+			}
+		</div>
+		@if (produtosExibidos.length < produtosFiltrados.length) {
+			<button class="show-more-button" type="button" (click)="verMais()">
+				Ver mais produtos <span aria-hidden="true">+</span>
+			</button>
+		}
+	</section>
+</section>
