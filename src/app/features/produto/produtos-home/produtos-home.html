@@ -11,14 +11,18 @@
 						<s class="original-price">{{ produto.precoOriginal }}</s>
 						<strong>{{ produto.preco }}</strong>
 					</div>
+					<!-- <button class="add-to-cart-button" type="button" (click)="adicionarAoCarrinho(produto)">
+						<span aria-hidden="true">&#128722;</span>
+						<span class="sr-only">Adicionar {{ produto.nome }} ao carrinho</span>
+					</button> -->
 				</article>
 			} @empty {
 				<p class="empty-state">Nenhum produto encontrado.</p>
 			}
 		</div>
-		@if (produtosExibidos.length < produtosFiltrados.length) {
+		<!-- @if (produtosExibidos.length < produtosFiltrados.length) {
 			<button class="show-more-button" type="button" (click)="verMais()">
 				Ver mais produtos <span aria-hidden="true">+</span>
 			</button>
-		}
+		} -->
 	</section>

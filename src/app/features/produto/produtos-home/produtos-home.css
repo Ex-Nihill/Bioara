@@ -1,14 +1,9 @@
 .produtos-page {
-	--brown: saddlebrown;
-	--green: saddlebrown;
-	--green-light: #5f9b7d;
-	--cream: #f8f5ed;
-	--gold: #c89b5b;
 	background: #6d9f86;
 	font-family: 'Century Gothic', 'Trebuchet MS', sans-serif;
 	min-height: calc(100vh - 64px);
 	padding: 1.5rem clamp(1rem, 5vw, 4rem) 4rem;
-	color: var(--brown);
+	color: saddlebrown;
 }
 
 .banner {
@@ -46,9 +41,9 @@ h1 {
 
 .search-box {
 	align-items: center;
-	background: var(--green-light);
+	background: #5f9b7d;
 	border-radius: 2rem;
-	color: var(--brown);
+	color: saddlebrown;
 	display: flex;
 	gap: .75rem;
 	margin: -1.2rem auto 2rem;
@@ -86,7 +81,7 @@ h1 {
 }
 
 .content-section h2 {
-	background: var(--green);
+	background: saddlebrown;
 	border-radius: 1rem;
 	color: white;
 	font-size: .95rem;
@@ -121,7 +116,7 @@ h1 {
 .category-card span { display: block; padding-top: .75rem; }
 
 .product-card {
-	background: var(--brown);
+	background: saddlebrown;
 	border-radius: 1.5rem;
 	color: white;
 	font-family: Roboto, sans-serif;
@@ -130,17 +125,17 @@ h1 {
 }
 
 .product-card > img { aspect-ratio: 1.15; display: block; object-fit: cover; width: 100%; }
-.offer-tag { background: var(--green); color: white; font-size: .62rem; left: .5rem; padding: .25rem .4rem; position: absolute; text-decoration: none; text-transform: uppercase; top: .5rem; }
+.offer-tag { background: saddlebrown; color: white; font-size: .62rem; left: .5rem; padding: .25rem .4rem; position: absolute; text-decoration: none; text-transform: uppercase; top: .5rem; }
 .offer-tag:hover { background: #1b7b2f; }
 .product-info { padding: .7rem .8rem 1rem; }
 .product-info p { font-size: .65rem; margin-bottom: .3rem; opacity: .8; }
 .product-info h3 { font-size: 1rem; margin-bottom: .45rem; }
 .original-price { display: block; font-size: .72rem; margin-bottom: .15rem; opacity: .75; }
-.product-info strong { color: var(--gold); font-size: 1.05rem; }
+.product-info strong { color: #c89b5b; font-size: 1.05rem; }
 .empty-state { grid-column: 1 / -1; text-align: center; }
 
 .show-more-button {
-	background: var(--green);
+	background: saddlebrown;
 	border: 0;
 	border-radius: 2rem;
 	color: white;
