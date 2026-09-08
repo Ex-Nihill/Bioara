@@ -1,1 +1,22 @@
-<p>home works!</p>
+<div class="carousel">
+  <div class="carousel-container">
+    @for (imagem of imagens; track $index; let i = $index) {
+      <img [src]="imagem" [class.active]="i === imagemAtual" alt="Imagem da notícia" />
+    }
+  </div>
+  <button class="prev" type="button" (click)="anterior()" aria-label="Imagem anterior">❮</button>
+  <button class="next" type="button" (click)="proxima()" aria-label="Próxima imagem">❯</button>
+  <div class="indicadores">
+    @for (imagem of imagens; track $index; let i = $index) {
+      <button
+        type="button"
+        [class.active]="i === imagemAtual"
+        (click)="irPara(i)"
+        [attr.aria-label]="'Ir para imagem ' + (i + 1)"
+      ></button>
+    }
+  </div>
+</div>
+<app-produtos-home></app-produtos-home>
+<!-- começar a fazer os produtos -->
+ 
