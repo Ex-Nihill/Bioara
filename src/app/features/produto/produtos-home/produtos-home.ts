@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatAnchor } from "@angular/material/button";
 
 interface Produto {
   nome: string;
@@ -11,7 +12,7 @@ interface Produto {
 
 @Component({
   selector: 'app-produtos-home',
-  imports: [],
+  imports: [MatAnchor],
   templateUrl: './produtos-home.html',
   styleUrl: './produtos-home.css',
 })
@@ -86,4 +87,9 @@ export class ProdutosHome {
   verMais(): void {
     this.quantidadeVisivel += 3;
   }
+   adicionarAoCarrinho(produto: any): void {
+    // Lógica para adicionar o produto ao carrinho
+    console.log(`Produto adicionado ao carrinho: ${produto.nome}`);
+  }
+
 }

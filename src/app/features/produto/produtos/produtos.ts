@@ -110,5 +110,9 @@ export class Produtos {
   selecionarCategoria(nome: string): void {
     this.termoBusca = this.termoBusca === nome ? '' : nome;
   }
+   adicionarAoCarrinho(produto: any): void {
+    // Lógica para adicionar o produto ao carrinho
+    console.log(`Produto adicionado ao carrinho: ${produto.nome}`);
+  }
 
 }
