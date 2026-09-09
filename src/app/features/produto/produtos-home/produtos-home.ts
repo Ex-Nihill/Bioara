@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { MatAnchor } from "@angular/material/button";
 import { CarrinhoFacade } from '../../../core/facades/carrinho.facade';
+
 interface Produto {
   nome: string;
   categoria: string;
@@ -11,7 +13,7 @@ interface Produto {
 
 @Component({
   selector: 'app-produtos-home',
-  imports: [RouterLink],
+  imports: [MatAnchor],
   templateUrl: './produtos-home.html',
   styleUrl: './produtos-home.css',
 })

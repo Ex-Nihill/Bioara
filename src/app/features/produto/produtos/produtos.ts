@@ -112,6 +112,22 @@ export class Produtos {
   selecionarCategoria(nome: string): void {
     this.termoBusca = this.termoBusca === nome ? '' : nome;
   }
+   adicionarAoCarrinho(produto: Produto): void {
+    this.carrinhoFacade.adicionarProduto({
+      nome: produto.nome,
+      preco: this.converterPreco(produto.preco),
+    });
+  }
+
+  private converterPreco(valorFormatado: string): number {
+    return Number(
+      valorFormatado
+        .replace(/[^\d,.-]/g, '')
+        .replace(/\./g, '')
+        .replace(',', '.'),
+    );
+  }
+
 
   adicionarAoCarrinho(produto: Produto): void {
     this.carrinhoFacade.adicionarProduto({

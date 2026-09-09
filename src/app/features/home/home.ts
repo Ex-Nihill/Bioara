@@ -20,6 +20,9 @@ export class Home implements OnInit, OnDestroy {
   }
 
   iniciarCarrossel(): void {
+
+
+
     this.intervalo = setInterval(() => {
       this.proxima();
     }, 4000);

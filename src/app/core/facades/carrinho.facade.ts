@@ -1,6 +1,6 @@
 import {Injectable, inject} from '@angular/core';
-import {CarrinhoService} from '../services/carrinho.services';
-import {ItemCarrinhoType} from '../models/item-carrinho';
+import { CarrinhoService } from '../services/carrinho.services';
+import { ItemCarrinhoType } from '../models/item-carrinho';
 
 @Injectable({
     providedIn: 'root',

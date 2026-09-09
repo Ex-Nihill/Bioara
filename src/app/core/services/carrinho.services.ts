@@ -62,4 +62,3 @@ return;
 localStorage.setItem(this.chaveStorage, JSON.stringify(itens));
 }
 }
-

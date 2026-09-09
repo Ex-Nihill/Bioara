@@ -1,1 +1,112 @@
-<p>cadastro works!</p>
+<div class="container">
+  <div class="content first-content">
+    <div class="first-column">
+      <h2 class="title">Bem-vindo(a) de volta!</h2>
+      <p class="description">Faça login para continuar</p>
+      <button class="btn btn-primary" matButton routerLink="/login">Login</button>
+    </div>
+    <!-- Fim da primeira coluna -->
+
+    <div class="second-column">
+      <h2 class="title">Cadastre-se</h2>
+      <div class="social-midea">
+        <ul class="list-social-media">
+          <li class="item-social-midea">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+          </li>
+          <li class="item-social-midea">
+            <a href="#"><i class="fa-brands fa-google"></i></a>
+          </li>
+          <li class="item-social-midea">
+            <a href="#"><i class="fa-solid fa-apple-whole"></i></a>
+          </li>
+        </ul>
+      </div>
+      <!-- Fim da social-midea -->
+      <p class="description">ou utilize o e-mail para se cadastrar</p>
+
+      <section class="cadastro">
+        <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+          <div class="item-form">
+            Nome:
+            <label class="form-label">
+              <i class="fa-regular fa-user"></i>
+              <input type="text" placeholder="nome" formControlName="nome"
+            /></label>
+            @if (formulario.get('nome')?.invalid && formulario.get('nome')?.touched) {
+              <span style="color: red">o nome deve ter no mínimo 6 caracteres</span>
+            }
+          </div>
+
+          <div class="item-form">
+            E-mail:
+            <label class="form-label">
+              <i class="fa-regular fa-envelope"></i>
+              <input type="email" placeholder="e-mail" formControlName="email"
+            /></label>
+            @if (formulario.get('email')?.invalid && formulario.get('email')?.touched) {
+              <span style="color: red">o e-mail é obrigatório</span>
+            }
+          </div>
+
+          <div class="item-form">
+            Senha:
+            <label class="form-label">
+              <i class="fa-solid fa-unlock"></i>
+              <input type="password" placeholder="senha" formControlName="senha"
+            /></label>
+            @if (formulario.get('senha')?.invalid && formulario.get('senha')?.touched) {
+              <span style="color: red"
+                >a senha é obrigatória e deve ter no mínimo 6 caracteres</span
+              >
+            }
+          </div>
+
+          <div class="item-form">
+            Confirmar Senha:
+            <label class="form-label">
+              <i class="fa-solid fa-unlock"></i>
+              <input type="password" placeholder="confirmarSenha" formControlName="confirmarSenha"
+            /></label>
+          </div>
+
+          <div class="item-form">
+            CPF:
+            <label class="form-label" for="cpf">
+              <input
+                type="number"
+                id="cpf"
+                name="cpf"
+                inputmode="numeric"
+                maxlength="14"
+                placeholder="000.000.000-00"
+                autocomplete="off"
+                formControlName="cpf"
+              />
+            </label>
+          </div>
+
+          <div class="item-form">
+            CEP:
+            <label class="form-label">
+              <input type="number" placeholder="00.000.000" formControlName="cep"
+            /></label>
+          </div>
+
+          <div class="item-form">
+            Endereço:
+            <label class="form-label">
+              <input type="text" placeholder="Digite seu endereço" formControlName="endereco"
+            /></label>
+          </div>
+
+          <button class="btn btn-second" type="submit" [disabled]="!formulario.valid" matButton>
+            Cadastre-se
+          </button>
+        </form>
+      </section>
+    </div>
+    <!-- Fim da segunda coluna -->
+  </div>
+  <!-- fim do first-content-->
+</div>
