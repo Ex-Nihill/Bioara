@@ -11,15 +11,10 @@ mat-toolbar{
     width: 5rem;
     margin-right: 50px;
 }
-position: relative;
-  font-size: 22px;
-  color: #a73e3e;
-  text-decoration: none;
-  transition: color 0.3s ease;
+
 }
 
 .carrinho {
-  color: #000000; 
    width: 20px;
     
 }
