@@ -129,4 +129,20 @@ export class Produtos {
   }
 
 
+  adicionarAoCarrinho(produto: Produto): void {
+    this.carrinhoFacade.adicionarProduto({
+      nome: produto.nome,
+      preco: this.converterPreco(produto.preco),
+    });
+  }
+
+  private converterPreco(valorFormatado: string): number {
+    return Number(
+      valorFormatado
+        .replace(/[^\d,.-]/g, '')
+        .replace(/\./g, '')
+        .replace(',', '.'),
+    );
+  }
+
 }
