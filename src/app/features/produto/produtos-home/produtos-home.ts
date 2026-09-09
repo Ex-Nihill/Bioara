@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { CarrinhoFacade } from '../../../core/facades/carrinho.facade';
 interface Produto {
   nome: string;
   categoria: string;
@@ -11,7 +11,7 @@ interface Produto {
 
 @Component({
   selector: 'app-produtos-home',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './produtos-home.html',
   styleUrl: './produtos-home.css',
 })
@@ -19,6 +19,7 @@ export class ProdutosHome {
   termoBusca = '';
   quantidadeVisivel = 3;
   readonly paginaPromocoes: boolean;
+  private carrinhoFacade = inject(CarrinhoFacade);
 
    constructor(rota: ActivatedRoute) {
     this.paginaPromocoes = rota.snapshot.data['promocoes'] === true;
@@ -85,5 +86,20 @@ export class ProdutosHome {
   }
   verMais(): void {
     this.quantidadeVisivel += 3;
+  }
+  adicionarAoCarrinho(produto: Produto): void {
+    this.carrinhoFacade.adicionarProduto({
+      nome: produto.nome,
+      preco: this.converterPreco(produto.preco),
+    });
+  }
+
+  private converterPreco(valorFormatado: string): number {
+    return Number(
+      valorFormatado
+        .replace(/[^\d,.-]/g, '')
+        .replace(/\./g, '')
+        .replace(',', '.'),
+    );
   }
 }

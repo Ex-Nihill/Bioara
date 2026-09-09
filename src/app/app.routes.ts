@@ -19,6 +19,10 @@ export const routes: Routes = [
   {
     path: 'conta',
     loadComponent: () => import('./features/conta/conta').then((m) => m.Conta)
-  }
+  },
+  {
+    path: 'carrinho',
+    loadComponent: () => import('./features/carrinho/carrinho').then((m) => m.Carrinho)
+  },
   
 ];

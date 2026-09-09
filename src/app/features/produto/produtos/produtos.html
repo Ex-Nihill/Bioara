@@ -51,6 +51,10 @@
 						<s class="original-price">{{ produto.precoOriginal }}</s>
 						<strong>{{ produto.preco }}</strong>
 					</div>
+					<button class="add-to-cart-button" type="button" (click)="adicionarAoCarrinho(produto)">
+						<span aria-hidden="true">&#128722;</span>
+						<span class="sr-only">Adicionar ao carrinho</span>
+					</button>
 				</article>
 			} @empty {
 				<p class="empty-state">Nenhum produto encontrado.</p>
