@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatAnchor } from "@angular/material/button";
+import { CarrinhoFacade } from '../../../core/facades/carrinho.facade';
 
 interface Produto {
   nome: string;
@@ -20,6 +21,7 @@ export class ProdutosHome {
   termoBusca = '';
   quantidadeVisivel = 3;
   readonly paginaPromocoes: boolean;
+  private carrinhoFacade = inject(CarrinhoFacade);
 
    constructor(rota: ActivatedRoute) {
     this.paginaPromocoes = rota.snapshot.data['promocoes'] === true;
@@ -87,9 +89,19 @@ export class ProdutosHome {
   verMais(): void {
     this.quantidadeVisivel += 3;
   }
-   adicionarAoCarrinho(produto: any): void {
-    // Lógica para adicionar o produto ao carrinho
-    console.log(`Produto adicionado ao carrinho: ${produto.nome}`);
+  adicionarAoCarrinho(produto: Produto): void {
+    this.carrinhoFacade.adicionarProduto({
+      nome: produto.nome,
+      preco: this.converterPreco(produto.preco),
+    });
   }
 
+  private converterPreco(valorFormatado: string): number {
+    return Number(
+      valorFormatado
+        .replace(/[^\d,.-]/g, '')
+        .replace(/\./g, '')
+        .replace(',', '.'),
+    );
+  }
 }

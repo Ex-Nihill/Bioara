@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
-import { Home } from './features/home/home';
-import { SobreNos } from './features/sobre-nos/sobre-nos';
+
 
 export const routes: Routes = [
   {
@@ -19,6 +18,10 @@ export const routes: Routes = [
   {
     path: 'conta',
     loadComponent: () => import('./features/conta/conta').then((m) => m.Conta)
-  }
+  },
+  {
+    path: 'carrinho',
+    loadComponent: () => import('./features/carrinho/carrinho').then((m) => m.Carrinho)
+  },
   
 ];
