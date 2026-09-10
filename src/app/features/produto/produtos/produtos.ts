@@ -62,6 +62,20 @@ export class Produtos {
       preco: 'R$ 49,90',
       imagem: '/images/tanjerina.png',
     },
+    {
+ nome: 'Sabonete Limão',
+      categoria: 'Sabonetes naturais',
+      precoOriginal: 'R$ 70,90',
+      preco: 'R$ 36,90',
+      imagem: '/images/SabãoLimão.jpg',
+    },
+    {
+       nome: 'Sabonete de Coco',
+      categoria: 'Sabonetes naturais',
+      precoOriginal: 'R$ 75,90',
+      preco: 'R$ 48,90',
+      imagem: '/images/SabãoCoco',
+    },
       {
         nome: 'Shampoo Herbal',
         categoria: 'Shampoo',
@@ -77,6 +91,13 @@ export class Produtos {
         imagem: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=500&q=80',
       },
       {
+        nome: 'Shampoo Herbal',
+        categoria: 'Shampoo',
+        precoOriginal: 'R$ 52,90',
+        preco: 'R$ 32,00',
+        imagem: 'images/Shampoo herbal.jpg',
+      },
+      {
         nome: 'Hidratante Corporal',
         categoria: 'Hidratante',
         precoOriginal: 'R$ 48,90',
@@ -90,6 +111,13 @@ export class Produtos {
         preco: 'R$ 49,90',
         imagem: 'https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?auto=format&fit=crop&w=500&q=80',
       },
+      {
+      nome: 'Hidratante Facial',
+        categoria: 'Hidratante',
+        precoOriginal: 'R$ 64,90',
+        preco: 'R$ 34,80',
+        imagem: '/images/HidratanteGreen.jpg',
+      }
   ];
 
   get produtosFiltrados(): Produto[] {
@@ -110,5 +138,4 @@ export class Produtos {
   selecionarCategoria(nome: string): void {
     this.termoBusca = this.termoBusca === nome ? '' : nome;
   }
-
 }
