@@ -8,6 +8,10 @@ interface Usuario {
   nome: string;
   email: string;
   senha: string;
+  endereco?: string;
+  cep?: number | string;
+  cpf?: number | string;
+  telefone?: number | string;
 }
 
 @Component({
@@ -45,18 +49,26 @@ export class Login implements OnInit {
 
     const { email, senha } = this.formLogin.value;
     const usuarios = this.getUsuarios();
-    console.log(email);
-    console.log(senha);
-    console.log(usuarios);
-    const usuario = usuarios.find((item) => item.email === email && item.senha === senha);
+    const usuario = usuarios.find(
+      (item) => String(item.email).trim().toLowerCase() === String(email).trim().toLowerCase() && item.senha === senha,
+    );
 
     if (!usuario) {
       this.erroLogin.set(true);
       return;
     }
 
+    const usuarioLogado = {
+      nome: String(usuario.nome ?? '').trim(),
+      email: String(usuario.email ?? '').trim(),
+      endereco: usuario.endereco ? String(usuario.endereco).trim() : '',
+      cep: usuario.cep ?? '',
+      cpf: usuario.cpf ?? '',
+      senha: String(usuario.senha ?? ''),
+    };
+
     this.erroLogin.set(false);
-    localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
-    this.router.navigate(['/']);
+    localStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado));
+    this.router.navigate(['/conta']);
   }
 }
