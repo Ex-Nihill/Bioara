@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CarrinhoFacade } from '../../../core/facades/carrinho.facade';
@@ -9,6 +9,7 @@ interface Produto {
   precoOriginal: string;
   preco: string;
   imagem: string;
+  avaliacao: number;
 }
 
 @Component({
@@ -19,9 +20,13 @@ interface Produto {
 })
 export class Produtos {
   termoBusca = '';
-  quantidadeVisivel = 3;
   readonly paginaPromocoes: boolean;
+  produtoSelecionado: Produto | null = null;
+  mensagemCarrinho = '';
+  mostrarTodosProdutos = false;
   private carrinhoFacade = inject(CarrinhoFacade);
+  private cdr = inject(ChangeDetectorRef);
+  private timeoutConfirmacao?: number;
   private router = inject(Router);
 
   constructor(rota: ActivatedRoute) {
@@ -35,11 +40,13 @@ export class Produtos {
     },
     {
       nome: 'Shampoo',
-      imagem: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=500&q=80',
+      imagem:
+        'https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=500&q=80',
     },
     {
       nome: 'Hidratante',
-      imagem: 'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?auto=format&fit=crop&w=500&q=80',
+      imagem:
+        'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?auto=format&fit=crop&w=500&q=80',
     },
   ];
 
@@ -50,6 +57,7 @@ export class Produtos {
       precoOriginal: 'R$ 59,90',
       preco: 'R$ 36,90',
       imagem: '/images/cremenozes.png',
+      avaliacao: 2,
     },
     {
       nome: 'Sabonete Banana',
@@ -57,6 +65,7 @@ export class Produtos {
       precoOriginal: 'R$ 49,90',
       preco: 'R$ 27,50',
       imagem: '/images/sabonetebanana.png',
+      avaliacao: 3,
     },
     {
       nome: 'Condicionador Tangerina',
@@ -64,63 +73,44 @@ export class Produtos {
       precoOriginal: 'R$ 69,90',
       preco: 'R$ 49,90',
       imagem: '/images/tanjerina.png',
+      avaliacao: 3,
     },
     {
- nome: 'Sabonete Limão',
-      categoria: 'Sabonetes naturais',
-      precoOriginal: 'R$ 70,90',
-      preco: 'R$ 36,90',
-      imagem: '/images/SabãoLimão.jpg',
+      nome: 'Shampoo Herbal',
+      categoria: 'Shampoo',
+      precoOriginal: 'R$ 45,90',
+      preco: 'R$ 32,90',
+      imagem:
+        'https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=500&q=80',
+      avaliacao: 2,
     },
     {
-       nome: 'Sabonete de Coco',
-      categoria: 'Sabonetes naturais',
-      precoOriginal: 'R$ 75,90',
-      preco: 'R$ 48,90',
-      imagem: '/images/SabãoCoco',
+      nome: 'Shampoo Nutritivo',
+      categoria: 'Shampoo',
+      precoOriginal: 'R$ 52,90',
+      preco: 'R$ 39,90',
+      imagem:
+        'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=500&q=80',
+      avaliacao: 5,
     },
-      {
-        nome: 'Shampoo Herbal',
-        categoria: 'Shampoo',
-        precoOriginal: 'R$ 45,90',
-        preco: 'R$ 32,90',
-        imagem: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=500&q=80',
-      },
-      {
-        nome: 'Shampoo Nutritivo',
-        categoria: 'Shampoo',
-        precoOriginal: 'R$ 52,90',
-        preco: 'R$ 39,90',
-        imagem: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=500&q=80',
-      },
-      {
-        nome: 'Shampoo Herbal',
-        categoria: 'Shampoo',
-        precoOriginal: 'R$ 52,90',
-        preco: 'R$ 32,00',
-        imagem: 'images/Shampoo herbal.jpg',
-      },
-      {
-        nome: 'Hidratante Corporal',
-        categoria: 'Hidratante',
-        precoOriginal: 'R$ 48,90',
-        preco: 'R$ 35,90',
-        imagem: 'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?auto=format&fit=crop&w=500&q=80',
-      },
-      {
-        nome: 'Hidratante Facial',
-        categoria: 'Hidratante',
-        precoOriginal: 'R$ 64,90',
-        preco: 'R$ 49,90',
-        imagem: 'https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?auto=format&fit=crop&w=500&q=80',
-      },
-      {
+    {
+      nome: 'Hidratante Corporal',
+      categoria: 'Hidratante',
+      precoOriginal: 'R$ 48,90',
+      preco: 'R$ 35,90',
+      imagem:
+        'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?auto=format&fit=crop&w=500&q=80',
+      avaliacao: 3,
+    },
+    {
       nome: 'Hidratante Facial',
-        categoria: 'Hidratante',
-        precoOriginal: 'R$ 64,90',
-        preco: 'R$ 34,80',
-        imagem: '/images/HidratanteGreen.jpg',
-      }
+      categoria: 'Hidratante',
+      precoOriginal: 'R$ 64,90',
+      preco: 'R$ 49,90',
+      imagem:
+        'https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?auto=format&fit=crop&w=500&q=80',
+      avaliacao: 1,
+    },
   ];
 
   get produtosFiltrados(): Produto[] {
@@ -131,15 +121,41 @@ export class Produtos {
   }
 
   get produtosExibidos(): Produto[] {
-    return this.produtosFiltrados.slice(0, this.quantidadeVisivel);
+    return this.mostrarTodosProdutos ? this.produtosFiltrados : this.produtosFiltrados.slice(0, 3);
   }
 
-  verMais(): void {
-    this.quantidadeVisivel += 3;
+  get existemMaisProdutos(): boolean {
+    return this.produtosFiltrados.length > 3;
+  }
+  alternarProdutos(): void {
+    this.mostrarTodosProdutos = !this.mostrarTodosProdutos;
+  }
+
+  obterEstrelas(avaliacao: number): string {
+    return `${'★'.repeat(Math.round(avaliacao))}${'☆'.repeat(5 - Math.round(avaliacao))}`;
+  }
+
+  mostrarConfirmacaoCarrinho(produto: Produto): void {
+    this.mensagemCarrinho = `${produto.nome} adicionado ao carrinho!`;
+    this.cdr.detectChanges();
+
+    window.clearTimeout(this.timeoutConfirmacao);
+    this.timeoutConfirmacao = window.setTimeout(() => {
+      this.mensagemCarrinho = '';
+      this.cdr.detectChanges();
+    }, 1800);
   }
 
    selecionarCategoria(nome: string): void {
     this.termoBusca = this.termoBusca === nome ? '' : nome;
+  }
+
+  abrirDetalhes(produto: Produto): void {
+    this.produtoSelecionado = produto;
+  }
+
+  fecharDetalhes(): void {
+    this.produtoSelecionado = null;
   }
    adicionarAoCarrinho(produto: Produto): void {
     const usuarioLogado = localStorage.getItem('usuarioLogado');
@@ -153,6 +169,8 @@ export class Produtos {
       nome: produto.nome,
       preco: this.converterPreco(produto.preco),
     });
+    this.mostrarConfirmacaoCarrinho(produto);
+    this.fecharDetalhes();
   }
 
   private converterPreco(valorFormatado: string): number {
@@ -163,5 +181,4 @@ export class Produtos {
         .replace(',', '.'),
     );
   }
-
 }
