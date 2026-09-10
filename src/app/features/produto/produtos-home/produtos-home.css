@@ -228,6 +228,9 @@ h1 {
 .add-to-cart-button:hover {
   background: rgba(218, 201, 116, 0.8);
 }
+.add-to-cart-button:active {
+  transform: scale(0.95);
+}
 
 @media (max-width: 600px) {
   .produtos-page {
