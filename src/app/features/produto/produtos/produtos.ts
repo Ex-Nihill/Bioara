@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CarrinhoFacade } from '../../../core/facades/carrinho.facade';
 
 interface Produto {
@@ -27,6 +27,7 @@ export class Produtos {
   private carrinhoFacade = inject(CarrinhoFacade);
   private cdr = inject(ChangeDetectorRef);
   private timeoutConfirmacao?: number;
+  private router = inject(Router);
 
   constructor(rota: ActivatedRoute) {
     this.paginaPromocoes = rota.snapshot.data['promocoes'] === true;
@@ -145,7 +146,7 @@ export class Produtos {
     }, 1800);
   }
 
-  selecionarCategoria(nome: string): void {
+   selecionarCategoria(nome: string): void {
     this.termoBusca = this.termoBusca === nome ? '' : nome;
   }
 
@@ -156,8 +157,14 @@ export class Produtos {
   fecharDetalhes(): void {
     this.produtoSelecionado = null;
   }
+   adicionarAoCarrinho(produto: Produto): void {
+    const usuarioLogado = localStorage.getItem('usuarioLogado');
 
-  adicionarAoCarrinho(produto: Produto): void {
+    if (!usuarioLogado) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
     this.carrinhoFacade.adicionarProduto({
       nome: produto.nome,
       preco: this.converterPreco(produto.preco),

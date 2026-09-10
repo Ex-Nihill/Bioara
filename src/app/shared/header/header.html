@@ -6,7 +6,7 @@
     <button matButton routerLink="/sobre-nos">Sobre nós</button>
 
     @if (getUsuarioLogado(); as usuario) {
-      <button matButton routerLink="">Conta</button>
+      <button matButton routerLink="/conta">Conta</button>
     } @else {
       <button matButton routerLink="/login">Login</button>
     }

@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+  FormBuilder,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { MatAnchor } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
 import { MatButton } from '@angular/material/button';
@@ -7,10 +14,10 @@ import { MatButton } from '@angular/material/button';
 interface Usuario {
   nome: string;
   email: string;
-  endereco: string;
-  telefone: number;
-  cep: number;
-  cpf: number;
+  endereco?: string;
+  telefone?: number | string;
+  cep?: number | string;
+  cpf?: number | string;
   senha: string;
 }
 @Component({
@@ -26,30 +33,45 @@ export class Cadastro implements OnInit {
     private fb: FormBuilder,
     private router: Router,
   ) {}
+
+  validarSenhasIguais(group: AbstractControl): ValidationErrors | null {
+    const senha = group.get('senha')?.value;
+    const confirmarSenha = group.get('confirmarSenha')?.value;
+
+    if (!senha || !confirmarSenha) {
+      return null;
+    }
+
+    return senha === confirmarSenha ? null : { senhaDiferente: true };
+  }
+
   setupForm(): void {
-    this.formulario = this.fb.group({
-      //cadstro de infos pessoais e login
+    this.formulario = this.fb.group(
+      {
+        //cadstro de infos pessoais e login
 
-      nome: ['', [Validators.required, Validators.minLength(6)]],
+        nome: ['', [Validators.required, Validators.minLength(3)]],
 
-      email: ['', [Validators.required, Validators.email]],
+        email: ['', [Validators.required, Validators.email]],
 
-      senha: ['', [Validators.required, Validators.minLength(6)]],
+        senha: ['', [Validators.required, Validators.minLength(6)]],
 
-      confirmarSenha: ['', [Validators.required]],
+        confirmarSenha: ['', [Validators.required]],
 
-      //endereço
+        //endereço
 
-      // telefone: ['', [
-      //   Validators.required
-      // ]],
+        // telefone: ['', [
+        //   Validators.required
+        // ]],
 
-      cpf: ['', [Validators.required]],
+        cpf: ['', [Validators.required]],
 
-      cep: ['', [Validators.required]],
+        cep: ['', [Validators.required]],
 
-      endereco: ['', [Validators.required]],
-    });
+        endereco: ['', [Validators.required]],
+      },
+      { validators: this.validarSenhasIguais },
+    );
   }
   ngOnInit(): void {
     this.setupForm();
@@ -63,23 +85,28 @@ export class Cadastro implements OnInit {
     localStorage.setItem('usuarios', JSON.stringify(lista));
   }
   onSubmit(): void {
-    console.log(this.formulario);
-
     if (this.formulario.invalid) return;
 
-    const { nome, email, endereco, senha, telefone, confirmarSenha, cep, cpf } =
-      this.formulario.value;
+    const { nome, email, endereco, senha, confirmarSenha, cep, cpf } = this.formulario.value;
+
     if (senha !== confirmarSenha) {
-      this.formulario.get('confirmarSenha')?.setErrors({ senhaDiferente: true });
+      this.formulario.setErrors({ senhaDiferente: true });
       return;
     }
 
     const usuarios = this.getUsuarios();
-    console.log('TESTE1', usuarios);
+    const usuarioCadastrado = {
+      nome: String(nome).trim(),
+      email: String(email).trim(),
+      endereco: String(endereco).trim(),
+      senha: String(senha),
+      cep: Number(cep),
+      cpf: String(cpf),
+    };
 
-    usuarios.push({ nome, email, endereco, senha, telefone, cep, cpf });
-    console.log('TESTE2', usuarios);
+    usuarios.push(usuarioCadastrado);
     this.salvarUsuario(usuarios);
-    this.router.navigate(['/login']);
+    localStorage.setItem('usuarioLogado', JSON.stringify(usuarioCadastrado));
+    this.router.navigate(['/conta']);
   }
 }

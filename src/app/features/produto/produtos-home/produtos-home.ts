@@ -26,6 +26,7 @@ export class ProdutosHome {
   private carrinhoFacade = inject(CarrinhoFacade);
   private cdr = inject(ChangeDetectorRef);
   private timeoutConfirmacao?: number;
+  private router = inject(Router);
 
   constructor(rota: ActivatedRoute) {
     this.paginaPromocoes = rota.snapshot.data['promocoes'] === true;
@@ -128,6 +129,13 @@ export class ProdutosHome {
   }
 
   adicionarAoCarrinho(produto: Produto): void {
+    const usuarioLogado = localStorage.getItem('usuarioLogado');
+
+    if (!usuarioLogado) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
     this.carrinhoFacade.adicionarProduto({
       nome: produto.nome,
       preco: this.converterPreco(produto.preco),
