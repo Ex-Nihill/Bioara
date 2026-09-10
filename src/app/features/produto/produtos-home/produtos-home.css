@@ -408,9 +408,11 @@ h1 {
   transition: transform 0.2s ease;
 }
 
-.category-card:hover {
+.category-card:hover,
+.product-card:hover {
   transform: translateY(-0.25rem);
 }
+
 .category-card-selected {
   box-shadow: 0 0 0 0.25rem var(--green);
 }
@@ -432,6 +434,7 @@ h1 {
   font-family: Roboto, sans-serif;
   overflow: hidden;
   position: relative;
+  transition: transform 0.2s ease;
 }
 
 .product-card > img {
