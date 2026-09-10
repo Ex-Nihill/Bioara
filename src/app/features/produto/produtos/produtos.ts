@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CarrinhoFacade } from '../../../core/facades/carrinho.facade';
 
 interface Produto {
@@ -22,6 +22,7 @@ export class Produtos {
   quantidadeVisivel = 3;
   readonly paginaPromocoes: boolean;
   private carrinhoFacade = inject(CarrinhoFacade);
+  private router = inject(Router);
 
   constructor(rota: ActivatedRoute) {
     this.paginaPromocoes = rota.snapshot.data['promocoes'] === true;
@@ -141,6 +142,13 @@ export class Produtos {
     this.termoBusca = this.termoBusca === nome ? '' : nome;
   }
    adicionarAoCarrinho(produto: Produto): void {
+    const usuarioLogado = localStorage.getItem('usuarioLogado');
+
+    if (!usuarioLogado) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
     this.carrinhoFacade.adicionarProduto({
       nome: produto.nome,
       preco: this.converterPreco(produto.preco),
