@@ -1,14 +1,17 @@
 <mat-toolbar color="Secundary">
-  
-<img src="logo.png" alt="logo" class="logo">
-<div>
-    <button matButton routerLink ="">Inicio</button>
-    <button matButton routerLink ="/produtos">Produtos</button>
-     <button matButton routerLink ="/sobre-nos">Sobre nós</button>
-       <button matButton routerLink ="">Conta</button>
-       <button matButton routerLink ="/carrinho"><img class="carrinho" src="/carrinho.png" alt=""></button>
+  <img src="logo.png" alt="logo" class="logo" />
+  <div>
+    <button matButton routerLink="">Inicio</button>
+    <button matButton routerLink="/produtos">Produtos</button>
+    <button matButton routerLink="/sobre-nos">Sobre nós</button>
 
-
+    @if (getUsuarioLogado(); as usuario) {
+      <button matButton routerLink="">Conta</button>
+    } @else {
+      <button matButton routerLink="/login">Login</button>
+    }
+    <button matButton routerLink="/carrinho">
+      <img class="carrinho" src="/carrinho.png" alt="" />
+    </button>
   </div>
-
 </mat-toolbar>

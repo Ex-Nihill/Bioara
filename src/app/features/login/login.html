@@ -1,1 +1,69 @@
-<p>login works!</p>
+<div class="container">
+  <div class="content second-content">
+    <div class="first-column">
+      <h2 class="title">Bem-vindo(a)!</h2>
+      <p class="description">comece sua jornada conosco</p>
+      <button class="btn btn-primary" matButton routerLink="/cadastro">cadastre-se</button>
+    </div>
+    <!-- Fim da primeira coluna -->
+
+    <div class="second-column">
+      <h1 class="title">Login</h1>
+      <h3 class="title">Iniciar sessão</h3>
+      <div class="social-midea">
+        <ul class="list-social-media">
+          <li class="item-social-midea">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+          </li>
+          <li class="item-social-midea">
+            <a href="#"><i class="fa-brands fa-google"></i></a>
+          </li>
+          <li class="item-social-midea">
+            <a href="#"><i class="fa-solid fa-apple-whole"></i></a>
+          </li>
+        </ul>
+      </div>
+      <!-- Fim da social-midea -->
+      <p class="description">ou utilize o e-mail para entrar</p>
+
+      <section class="login">
+        <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+          <div class="email">
+            E-mail:
+            <label class="form-label"
+              ><i class="fa-regular fa-envelope"></i>
+              <input type="email" formControlName="email" placeholder="e-mail"
+            /></label>
+            @if (formLogin.get('email')?.invalid && formLogin.get('email')?.touched) {
+              <span style="color: red">o e-mail é obrigatório</span>
+            }
+          </div>
+
+          <div class="senha">
+            Senha:
+            <label class="form-label"
+              ><i class="fa-solid fa-unlock"></i>
+              <input type="password" formControlName="senha" placeholder="senha"
+            /></label>
+            @if (formLogin.get('senha')?.invalid && formLogin.get('senha')?.touched) {
+              <span style="color: red"
+                >a senha é obrigatória e deve ter no mínimo 6 caracteres</span
+              >
+            }
+          </div>
+
+          @if (erroLogin()) {
+            <span style="color: red">E-mail ou senha inválidos.</span>
+          }
+
+          <a href="#" class="forgot-password">Esqueceu a senha?</a>
+
+          <button class="btn btn-second" type="submit" [disabled]="!formLogin.valid">Entrar</button>
+        </form>
+      </section>
+    </div>
+    <!-- Fim da segunda coluna -->
+  </div>
+  <!-- Fim do second-content-->
+</div>
+<!-- Fim do container -->
