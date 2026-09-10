@@ -1,0 +1,20 @@
+mat-toolbar{
+   display: flex;
+    flex-wrap: wrap;
+    /* height: 20%; */
+    justify-content: center;
+    background: transparent;
+    div{
+        gap: 2px;
+    }
+.logo{
+    width: 5rem;
+    margin-right: 50px;
+}
+
+}
+
+.carrinho {
+   width: 20px;
+    
+}

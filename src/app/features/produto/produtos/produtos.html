@@ -1,0 +1,115 @@
+<section class="produtos-page" [class.promocoes-page]="paginaPromocoes">
+	@if (!paginaPromocoes) {
+	<div class="banner">
+		<div class="banner-copy">
+			<p class="eyebrow">Bioara botanicals</p>
+			<h1>Beleza que nasce da natureza</h1>
+			<p>Cuidados essenciais feitos para a sua rotina.</p>
+		</div>
+	</div>
+	}
+
+	<label class="search-box" [class.search-box-promocoes]="paginaPromocoes">
+		<span aria-hidden="true">&#128269;</span>
+		<input
+			type="search"
+			placeholder="Pesquisar produto..."
+			aria-label="Pesquisar produto"
+			[(ngModel)]="termoBusca"
+		/>
+	</label>
+
+	@if (!paginaPromocoes) {
+	<section class="content-section categories-section" aria-labelledby="categorias-title">
+		<h2 id="categorias-title">Navegue nestas categorias populares</h2>
+		<div class="category-grid">
+			@for (categoria of categorias; track categoria.nome) {
+				<button
+					class="category-card"
+					[class.category-card-selected]="termoBusca === categoria.nome"
+					type="button"
+					(click)="selecionarCategoria(categoria.nome)"
+				>
+					<img [src]="categoria.imagem" [alt]="categoria.nome" />
+					<span>{{ categoria.nome }}</span>
+				</button>
+			}
+		</div>
+	</section>
+	}
+
+	<section class="content-section popular-section" aria-labelledby="populares-title">
+		<h2 id="populares-title">{{ paginaPromocoes ? 'Ofertas imperdíveis' : 'Produtos populares' }}</h2>
+		<div class="product-grid">
+			@for (produto of produtosExibidos; track produto.nome) {
+				<article class="product-card" (click)="abrirDetalhes(produto)">
+					<a class="offer-tag" routerLink="/promocoes">Oferta imperdível!</a>
+					<img [src]="produto.imagem" [alt]="produto.nome" />
+					<div class="product-info">
+						<p>{{ produto.categoria }}</p>
+						<h3>{{ produto.nome }}</h3>
+						<div class="rating-row">
+							<span class="stars">{{ obterEstrelas(produto.avaliacao) }}</span>
+							<span class="rating-value">{{ produto.avaliacao }}</span>
+						</div>
+						<s class="original-price">{{ produto.precoOriginal }}</s>
+						<strong>{{ produto.preco }}</strong>
+					</div>
+					<button class="add-to-cart-button" type="button" (click)="$event.stopPropagation(); adicionarAoCarrinho(produto)">
+						<span aria-hidden="true">&#128722;</span>
+						<span class="sr-only">Adicionar ao carrinho</span>
+					</button>
+				</article>
+			} @empty {
+				<p class="empty-state">Nenhum produto encontrado.</p>
+			}
+		</div>
+		@if (existemMaisProdutos) {
+			<button class="show-more-button" type="button" (click)="alternarProdutos()">
+				{{ mostrarTodosProdutos ? 'Mostrar menos' : 'Ver mais produtos' }}
+			</button>
+		}
+	</section>
+
+	@if (mensagemCarrinho) {
+		<div class="cart-confirmation" role="status" aria-live="polite">
+			{{ mensagemCarrinho }}
+		</div>
+	}
+
+	@if (produtoSelecionado) {
+		<div class="product-modal-backdrop" (click)="fecharDetalhes()">
+			<div class="product-modal" (click)="$event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="produto-detalhe-titulo">
+				<button type="button" class="close-button" (click)="fecharDetalhes()" aria-label="Fechar">×</button>
+				<div class="modal-image-wrap">
+					<img [src]="produtoSelecionado.imagem" [alt]="produtoSelecionado.nome">
+				</div>
+				<div class="modal-content">
+					<p class="modal-badge">{{ produtoSelecionado.categoria }}</p>
+					<h3 id="produto-detalhe-titulo">{{ produtoSelecionado.nome }}</h3>
+					<div class="rating-row modal-rating">
+						<span class="stars">{{ obterEstrelas(produtoSelecionado.avaliacao) }}</span>
+						<span class="rating-value">{{ produtoSelecionado.avaliacao }} de 5</span>
+					</div>
+					<p class="modal-description">Uma escolha especial para transformar sua rotina de autocuidado com ingredientes naturais e uma textura suave.</p>
+					<div class="modal-highlights">
+						<span>Ingredientes naturais</span>
+						<span>Uso diário</span>
+						<span>Vegano</span>
+					</div>
+					<p class="modal-stock"><span aria-hidden="true">&#10003;</span> Disponível para envio</p>
+					<div class="modal-price-row">
+						<div>
+							<span class="modal-label">Por apenas</span>
+							<strong>{{ produtoSelecionado.preco }}</strong>
+						</div>
+						<span class="modal-original">{{ produtoSelecionado.precoOriginal }}</span>
+					</div>
+					<button type="button" class="modal-cart-button" (click)="adicionarAoCarrinho(produtoSelecionado)">
+						<span aria-hidden="true">&#128722;</span> Adicionar ao carrinho
+					</button>
+				</div>
+			</div>
+		</div>
+	}
+</section>

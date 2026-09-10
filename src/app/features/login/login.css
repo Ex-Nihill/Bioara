@@ -1,0 +1,151 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Times New Roman';
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+ 
+}
+.content {
+  border-radius: 20px;
+  background-color: #fffccc;
+  height: 85%;
+  width: 980px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.content::before {
+  content: '';
+  position: absolute;
+  border-radius: 20px;
+  background-color: #1eb50380;
+  height: 40%;
+  width: 32%;
+}
+.title {
+  font-size: 26px;
+  font-weight: bold;
+  text-transform: capitalize;
+  margin: 12px 0;
+}
+
+.description {
+  font-size: 15px;
+  padding: 12px 0;
+}
+.btn {
+  border-radius: 20px;
+  width: 105px;
+  height: 30px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: bold;
+}
+.btn-primary {
+  background-color: transparent;
+  border: 1px solid #fffccc;
+  color: #fffccc;
+  transition:
+    background-color 1s,
+    color 1s;
+}
+.btn-primary:hover {
+  background-color: #fffccc;
+  color: #1eb503;
+}
+
+.btn-second {
+  background-color: transparent;
+  border: 1px solid #1eb503;
+  color: #1eb503;
+  margin: 8px;
+  transition:
+    background-color 1s,
+    color 1s;
+}
+.btn-second:hover {
+  background-color: #1eb503;
+  border: 1px solid #fffccc;
+  color: #fffccc;
+}
+
+.first-content {
+  display: flex;
+  position: relative;
+  display: none;
+}
+.first-column {
+  text-align: center;
+  width: 40%;
+  z-index: 10;
+}
+
+.second-column {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  width: 60%;
+}
+.list-social-media {
+  display: flex;
+  list-style-type: none;
+  margin: 5px;
+}
+.item-social-midea {
+  border: 2px solid #1eb503;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  margin: 6px;
+}
+.item-social-midea a {
+  color: #1eb503;
+}
+.item-social-midea a:hover {
+  background-color: #1eb503;
+  color: #fffccc;
+}
+.item-social-midea:hover {
+  background-color: #1eb503;
+  color: #fffccc;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.login input {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background-color: #1eb50300;
+  border-radius: 20px;
+  width: 100%;
+  margin: 8px;
+}
+.form-label {
+  background-color: #1eb50330;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+}
+span {
+  display: flex;
+}
+label {
+  padding: 5px;
+}
+input::placeholder {
+  padding: 2px;
+}
