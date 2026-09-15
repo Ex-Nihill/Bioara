@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatAnchor } from '@angular/material/button';
 import { CarrinhoFacade } from '../../../core/facades/carrinho.facade';
 
