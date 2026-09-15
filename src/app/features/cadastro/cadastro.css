@@ -2,7 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Times New Roman';
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 }
 
 form{
@@ -15,7 +15,14 @@ form{
     align-items: center;
 }
 
-
+.container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+ 
+}
 .content {
   border-radius: 20px;
   background-color: #fffccc;

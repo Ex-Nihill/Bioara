@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal } from '@angular/core';
 import { Produtos } from '../produto/produtos/produtos';
 import { ProdutosHome } from '../produto/produtos-home/produtos-home';
 @Component({
@@ -9,7 +9,7 @@ import { ProdutosHome } from '../produto/produtos-home/produtos-home';
 })
 export class Home implements OnInit, OnDestroy {
   
-  imagemAtual = 0;
+  imagemAtual = signal(0);
 
   imagens = ['image1.jpeg', 'image2.jpeg', 'image3.jpeg'];
 
@@ -20,24 +20,21 @@ export class Home implements OnInit, OnDestroy {
   }
 
   iniciarCarrossel(): void {
-
-
-
     this.intervalo = setInterval(() => {
       this.proxima();
     }, 4000);
   }
 
   proxima(): void {
-    this.imagemAtual = (this.imagemAtual + 1) % this.imagens.length;
+    this.imagemAtual.update((indice) => (indice + 1) % this.imagens.length);
   }
 
   anterior(): void {
-    this.imagemAtual = (this.imagemAtual - 1 + this.imagens.length) % this.imagens.length;
+    this.imagemAtual.update((indice) => (indice - 1 + this.imagens.length) % this.imagens.length);
   }
 
   irPara(index: number): void {
-    this.imagemAtual = index;
+    this.imagemAtual.set(index);
   }
 
   ngOnDestroy(): void {
