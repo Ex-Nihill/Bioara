@@ -1,1 +1,54 @@
-<p>conta works!</p>
+<section class="conta-container">
+  @if (usuario) {
+    <div class="conta-card">
+      <div class="conta-header">
+        <div>
+          <p class="eyebrow">Minha conta</p>
+          <h2>{{ usuario.nome }}</h2>
+        </div>
+        <button type="button" class="btn-sair" (click)="sair()">Sair</button>
+      </div>
+
+      <div class="conta-grid">
+        <div class="info-box">
+          <span class="label">E-mail</span>
+          <strong>{{ usuario.email }}</strong>
+        </div>
+
+        @if (usuario.endereco) {
+          <div class="info-box">
+            <span class="label">Endereço</span>
+            <strong>{{ usuario.endereco }}</strong>
+          </div>
+        }
+
+        @if (usuario.cep) {
+          <div class="info-box">
+            <span class="label">CEP</span>
+            <strong>{{ usuario.cep }}</strong>
+          </div>
+        }
+
+        @if (usuario.cpf) {
+          <div class="info-box">
+            <span class="label">CPF</span>
+            <strong>{{ usuario.cpf }}</strong>
+          </div>
+        }
+
+        @if (usuario.telefone) {
+          <div class="info-box">
+            <span class="label">Telefone</span>
+            <strong>{{ usuario.telefone }}</strong>
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="conta-vazio">
+      <h2>Você ainda não está logado</h2>
+      <p>Faça login para visualizar os dados da sua conta.</p>
+      <button type="button" class="btn-login" [routerLink]="['/login']">Ir para login</button>
+    </div>
+  }
+</section>

@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatAnchor } from '@angular/material/button';
+import { CarrinhoFacade } from '../../../core/facades/carrinho.facade';
 
 interface Produto {
   nome: string;
@@ -7,29 +9,36 @@ interface Produto {
   precoOriginal: string;
   preco: string;
   imagem: string;
+  avaliacao: number;
 }
 
 @Component({
   selector: 'app-produtos-home',
-  imports: [],
+  imports: [MatAnchor],
   templateUrl: './produtos-home.html',
   styleUrl: './produtos-home.css',
 })
 export class ProdutosHome {
   termoBusca = '';
-  quantidadeVisivel = 3;
   readonly paginaPromocoes: boolean;
+  produtoSelecionado: Produto | null = null;
+  mensagemCarrinho = '';
+  private carrinhoFacade = inject(CarrinhoFacade);
+  private cdr = inject(ChangeDetectorRef);
+  private timeoutConfirmacao?: number;
+  private router = inject(Router);
 
-   constructor(rota: ActivatedRoute) {
+  constructor(rota: ActivatedRoute) {
     this.paginaPromocoes = rota.snapshot.data['promocoes'] === true;
   }
   readonly produtos: Produto[] = [
-    {
+   {
       nome: 'Creme Nozes',
       categoria: 'Cuidados para o corpo',
       precoOriginal: 'R$ 59,90',
       preco: 'R$ 36,90',
       imagem: '/images/cremenozes.png',
+      avaliacao: 2,
     },
     {
       nome: 'Sabonete Banana',
@@ -37,6 +46,7 @@ export class ProdutosHome {
       precoOriginal: 'R$ 49,90',
       preco: 'R$ 27,50',
       imagem: '/images/sabonetebanana.png',
+      avaliacao: 4,
     },
     {
       nome: 'Condicionador Tangerina',
@@ -44,6 +54,23 @@ export class ProdutosHome {
       precoOriginal: 'R$ 69,90',
       preco: 'R$ 49,90',
       imagem: '/images/tanjerina.png',
+      avaliacao: 5,
+    },
+    {
+ nome: 'Sabonete Limão',
+      categoria: 'Sabonetes naturais',
+      precoOriginal: 'R$ 70,90',
+      preco: 'R$ 36,90',
+      imagem: '/images/SabãoLimão.jpg',
+    avaliacao: 1,
+    },
+    {
+       nome: 'Sabonete de Coco',
+      categoria: 'Sabonetes naturais',
+      precoOriginal: 'R$ 75,90',
+      preco: 'R$ 48,90',
+      imagem: '/images/SabãoCoco',
+    avaliacao: 3,
     },
       {
         nome: 'Shampoo Herbal',
@@ -51,6 +78,7 @@ export class ProdutosHome {
         precoOriginal: 'R$ 45,90',
         preco: 'R$ 32,90',
         imagem: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=500&q=80',
+        avaliacao: 3,
       },
       {
         nome: 'Shampoo Nutritivo',
@@ -58,6 +86,15 @@ export class ProdutosHome {
         precoOriginal: 'R$ 52,90',
         preco: 'R$ 39,90',
         imagem: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=500&q=80',
+        avaliacao: 2,
+      },
+      {
+        nome: 'Shampoo Herbal',
+        categoria: 'Shampoo',
+        precoOriginal: 'R$ 52,90',
+        preco: 'R$ 32,00',
+        imagem: 'images/Shampoo herbal.jpg',
+        avaliacao: 4,
       },
       {
         nome: 'Hidratante Corporal',
@@ -65,6 +102,7 @@ export class ProdutosHome {
         precoOriginal: 'R$ 48,90',
         preco: 'R$ 35,90',
         imagem: 'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?auto=format&fit=crop&w=500&q=80',
+        avaliacao: 4,
       },
       {
         nome: 'Hidratante Facial',
@@ -72,7 +110,16 @@ export class ProdutosHome {
         precoOriginal: 'R$ 64,90',
         preco: 'R$ 49,90',
         imagem: 'https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?auto=format&fit=crop&w=500&q=80',
+        avaliacao: 3,
       },
+      {
+      nome: 'Hidratante Facial',
+        categoria: 'Hidratante',
+        precoOriginal: 'R$ 64,90',
+        preco: 'R$ 34,80',
+        imagem: '/images/HidratanteGreen.jpg',
+        avaliacao: 3,
+      }
   ];
   get produtosFiltrados(): Produto[] {
     const termo = this.termoBusca.trim().toLowerCase();
@@ -80,10 +127,57 @@ export class ProdutosHome {
       `${produto.nome} ${produto.categoria}`.toLowerCase().includes(termo),
     );
   }
- get produtosExibidos(): Produto[] {
-    return this.produtosFiltrados.slice(0, this.quantidadeVisivel);
+  get produtosExibidos(): Produto[] {
+    return this.produtosFiltrados.slice(0, 3);
   }
-  verMais(): void {
-    this.quantidadeVisivel += 3;
+  obterEstrelas(avaliacao: number): string {
+    return `${'★'.repeat(Math.round(avaliacao))}${'☆'.repeat(5 - Math.round(avaliacao))}`;
+  }
+
+  mostrarConfirmacaoCarrinho(produto: Produto): void {
+    this.mensagemCarrinho = `${produto.nome} adicionado ao carrinho!`;
+    this.cdr.detectChanges();
+
+    if (this.timeoutConfirmacao) {
+      clearTimeout(this.timeoutConfirmacao);
+    }
+
+    this.timeoutConfirmacao = setTimeout(() => {
+      this.mensagemCarrinho = '';
+      this.cdr.detectChanges();
+    }, 1800);
+  }
+
+  abrirDetalhes(produto: Produto): void {
+    this.produtoSelecionado = produto;
+  }
+
+  fecharDetalhes(): void {
+    this.produtoSelecionado = null;
+  }
+
+  adicionarAoCarrinho(produto: Produto): void {
+    const usuarioLogado = localStorage.getItem('usuarioLogado');
+
+    if (!usuarioLogado) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.carrinhoFacade.adicionarProduto({
+      nome: produto.nome,
+      preco: this.converterPreco(produto.preco),
+    });
+    this.mostrarConfirmacaoCarrinho(produto);
+    this.fecharDetalhes();
+  }
+
+  private converterPreco(valorFormatado: string): number {
+    return Number(
+      valorFormatado
+        .replace(/[^\d,.-]/g, '')
+        .replace(/\./g, '')
+        .replace(',', '.'),
+    );
   }
 }

@@ -20,8 +20,8 @@ interface Usuario {
   cep?: number | string;
   cpf?: number | string;
   telefone?: number | string;
-}
 
+}
 @Component({
   selector: 'app-cadastro',
   imports: [ReactiveFormsModule, MatAnchor, RouterLink, MatButton],

@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
-import { Home } from './features/home/home';
-import { SobreNos } from './features/sobre-nos/sobre-nos';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -15,10 +14,23 @@ export const routes: Routes = [
     path: 'sobre-nos',
     loadComponent: () => import('./features/sobre-nos/sobre-nos').then((m) => m.SobreNos),
   },
-  
+
   {
     path: 'conta',
-    loadComponent: () => import('./features/conta/conta').then((m) => m.Conta)
-  }
-  
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/conta/conta').then((m) => m.Conta),
+  },
+  {
+    path: 'carrinho',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/carrinho/carrinho').then((m) => m.Carrinho),
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./features/login/login').then((m) => m.Login),
+  },
+  {
+    path: 'cadastro',
+    loadComponent: () => import('./features/cadastro/cadastro').then((m) => m.Cadastro),
+  },
 ];
