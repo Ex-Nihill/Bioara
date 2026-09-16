@@ -11,18 +11,19 @@ import { MatAnchor } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
 import { MatButton } from '@angular/material/button';
 
+
 interface Usuario {
   nome: string;
   email: string;
+  senha: string;
   endereco?: string;
-  telefone?: number | string;
   cep?: number | string;
   cpf?: number | string;
-  senha: string;
+  telefone?: number | string;
+
 }
 @Component({
   selector: 'app-cadastro',
-  standalone: true,
   imports: [ReactiveFormsModule, MatAnchor, RouterLink, MatButton],
   templateUrl: './cadastro.html',
   styleUrl: './cadastro.css',
@@ -64,9 +65,9 @@ export class Cadastro implements OnInit {
         //   Validators.required
         // ]],
 
-        cpf: ['', [Validators.required]],
+        cpf: ['', [Validators.required, Validators.minLength(11)]],
 
-        cep: ['', [Validators.required]],
+        cep: ['', [Validators.required, Validators.minLength(8)]],
 
         endereco: ['', [Validators.required]],
       },
