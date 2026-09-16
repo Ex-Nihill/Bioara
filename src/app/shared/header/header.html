@@ -4,10 +4,10 @@
     <button matButton routerLink="">Inicio</button>
     <button matButton routerLink="/produtos">Produtos</button>
     <button matButton routerLink="/sobre-nos">Sobre nós</button>
-    </div>
-<div>
+  </div>
+  <div>
     @if (getUsuarioLogado(); as usuario) {
-      <button matButton routerLink="/conta">Conta</button>
+      <button matButton routerLink="/conta"> <i class="fa-regular fa-user"></i></button>
     } @else {
       <button matButton routerLink="/login">Login</button>
     }
