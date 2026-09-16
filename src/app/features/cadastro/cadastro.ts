@@ -1,12 +1,30 @@
-import { Component } from '@angular/core';
-import { FormGroup, Validators, FormBuilder, ValidationErrors, AbstractControl } from '@angular/forms';
-import { Router } from '@angular/router';
-import { OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+  FormBuilder,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
+import { MatAnchor } from '@angular/material/button';
+import { Router, RouterLink } from '@angular/router';
+import { MatButton } from '@angular/material/button';
 
+
+interface Usuario {
+  nome: string;
+  email: string;
+  senha: string;
+  endereco?: string;
+  cep?: number | string;
+  cpf?: number | string;
+  telefone?: number | string;
+}
 
 @Component({
   selector: 'app-cadastro',
-  imports: [],
+  imports: [ReactiveFormsModule, MatAnchor, RouterLink, MatButton],
   templateUrl: './cadastro.html',
   styleUrl: './cadastro.css',
 })
@@ -59,7 +77,7 @@ export class Cadastro implements OnInit {
   ngOnInit(): void {
     this.setupForm();
   }
-/*
+
   getUsuarios(): Usuario[] {
     const dados = localStorage.getItem('usuarios');
     return dados ? JSON.parse(dados) : [];
@@ -91,5 +109,5 @@ export class Cadastro implements OnInit {
     this.salvarUsuario(usuarios);
     localStorage.setItem('usuarioLogado', JSON.stringify(usuarioCadastrado));
     this.router.navigate(['/conta']);
-  }*/
+  }
 }

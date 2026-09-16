@@ -1,8 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import { FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { Router, RouterLink } from '@angular/router';
+
+interface Usuario {
+  nome: string;
+  email: string;
+  senha: string;
+  endereco?: string;
+  cep?: number | string;
+  cpf?: number | string;
+  telefone?: number | string;
+}
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [ReactiveFormsModule, MatToolbarModule, RouterLink, MatButtonModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
