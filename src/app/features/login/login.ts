@@ -3,7 +3,6 @@ import { FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angula
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink } from '@angular/router';
-import { CarrinhoService } from '../../core/services/carrinho.services';
 
 interface Usuario {
   nome: string;
@@ -36,7 +35,6 @@ export class Login implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private carrinhoService: CarrinhoService,
   ) {}
   setupForm(): void {
     this.formLogin = this.fb.group({
@@ -73,7 +71,6 @@ export class Login implements OnInit {
       this.erroLogin.set(true);
       return;
     }
-    
 
     this.erroLogin.set(false);
     localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
@@ -109,9 +106,6 @@ export class Login implements OnInit {
   voltarParaLogin(): void {
     this.exibirEsqueciSenha.set(false);
     this.erroLogin.set(false);
-    localStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado));
-    this.carrinhoService.carregarCarrinhoDoUsuarioAtual();
-    this.router.navigate(['/conta']);
     this.erroEsqueci.set(false);
     this.sucessoEsqueci.set(false);
     this.formLogin.reset();
