@@ -59,6 +59,7 @@ export class Login implements OnInit {
       this.erroLogin.set(true);
       return;
     }
+    
 
     const usuarioLogado = {
       nome: String(usuario.nome ?? '').trim(),
