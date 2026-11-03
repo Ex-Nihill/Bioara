@@ -1,0 +1,63 @@
+.pagina-compra { max-width: 1180px; margin: 2rem auto 4rem; padding: 2.5rem; color: #3b2a1d; }
+.cabecalho-compra, .titulo-bloco, .resumo-topo, .linha-resumo, .total-resumo { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.cabecalho-compra { margin-bottom: 2rem; }
+.etiqueta-secao { margin: 0 0 .45rem; color: #6d9f86; font-size: .75rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+h1, h2, p { margin-top: 0; }
+h1 { margin-bottom: .5rem; color: #4e311f; font-size: clamp(2rem, 4vw, 3rem); }
+.cabecalho-compra p:not(.etiqueta-secao) { margin-bottom: 0; color: #735d4b; }
+.etapa-atual { display: flex; align-items: center; gap: .65rem; color: #735d4b; }
+.etapa-atual span { display: grid; place-items: center; width: 2.7rem; height: 2.7rem; border-radius: 50%; background: #6d9f86; color: white; font-weight: 800; }
+.layout-compra { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(300px, .75fr); gap: 1.5rem; align-items: start; }
+.coluna-formulario { display: grid; gap: 1.25rem; }
+.bloco-compra, .resumo-compra, .compra-sucesso, .compra-vazia { border: 1px solid rgba(109, 159, 134, .25); border-radius: 22px; background: rgba(255, 255, 255, .92); box-shadow: 0 14px 32px rgba(60, 40, 20, .1); }
+.bloco-compra { padding: 1.5rem; }
+.titulo-bloco { justify-content: flex-start; margin-bottom: 1.35rem; }
+.numero-bloco { color: #6d9f86; font-size: .85rem; font-weight: 800; }
+.titulo-bloco h2 { margin-bottom: .25rem; color: #4e311f; font-size: 1.25rem; }
+.titulo-bloco p { margin-bottom: 0; color: #806a58; font-size: .9rem; }
+.grade-campos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.campo { display: flex; flex-direction: column; gap: .4rem; color: #5c4534; font-size: .82rem; font-weight: 700; }
+.campo-largo { grid-column: span 2; }
+.grade-endereco { grid-template-columns: minmax(110px, 1fr) minmax(0, 1.35fr) minmax(0, 1.35fr) minmax(64px, .65fr); }
+.campo-cep { grid-column: 1; }
+.campo-endereco { grid-column: 2 / 5; }
+.campo-numero { grid-column: 1; }
+.campo-complemento { grid-column: 2 / 5; }
+.campo-bairro { grid-column: 1 / 3; }
+.campo-cidade { grid-column: 3; }
+.campo-estado { grid-column: 4; }
+.campo-pequeno { max-width: 100px; }
+.opcional { color: #a18872; font-weight: 400; }
+input { box-sizing: border-box; width: 100%; min-width: 0; border: 1px solid #d6cabe; border-radius: 10px; padding: .78rem .85rem; background: #fffdf9; color: #3b2a1d; font: inherit; font-weight: 400; outline: none; }
+input:focus { border-color: #6d9f86; box-shadow: 0 0 0 3px rgba(109, 159, 134, .15); }
+.opcoes-pagamento { display: grid; gap: .7rem; }
+.opcao-pagamento { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .8rem; cursor: pointer; border: 1px solid #ded3c7; border-radius: 12px; padding: .85rem 1rem; }
+.opcao-pagamento:has(input:checked) { border-color: #6d9f86; background: rgba(109, 159, 134, .1); }
+.opcao-pagamento input { width: auto; accent-color: #6d9f86; }
+.opcao-pagamento span { display: grid; gap: .2rem; }
+.opcao-pagamento strong { color: #4e311f; }
+.opcao-pagamento small { color: #806a58; }
+.opcao-pagamento b { color: #6d9f86; font-size: 1.25rem; }
+.dados-cartao { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+.resumo-compra { position: sticky; top: 1.5rem; padding: 1.5rem; background: linear-gradient(160deg, #fffdf9, #f0f5ef); }
+.resumo-topo span { color: #806a58; font-size: .9rem; }
+.itens-resumo { display: grid; gap: .85rem; margin: 1.25rem 0; padding: 1rem 0; border-top: 1px solid #dfd5c9; border-bottom: 1px solid #dfd5c9; }
+.item-resumo { display: flex; justify-content: space-between; gap: 1rem; color: #5c4534; font-size: .9rem; }
+.item-resumo small { color: #927966; }
+.item-resumo strong { white-space: nowrap; color: #4e311f; }
+.linha-resumo { margin: .75rem 0; color: #806a58; font-size: .9rem; }
+.entrega-gratis { color: #4f8b67; }
+.total-resumo { margin-top: 1.25rem; padding-top: 1.15rem; border-top: 1px solid #cfc1b2; color: #4e311f; font-size: 1.2rem; }
+.total-resumo strong { font-size: 1.45rem; }
+.botao { display: inline-flex; align-items: center; justify-content: center; border: 0; border-radius: 10px; padding: .85rem 1rem; font: inherit; font-weight: 800; text-decoration: none; cursor: pointer; }
+.botao-principal { background: #6d9f86; color: white; }
+.botao-principal:hover { background: #57856e; }
+.botao-finalizar { width: 100%; margin-top: 1.5rem; }
+.aviso-seguranca { margin: 1rem 0 0; color: #806a58; font-size: .75rem; line-height: 1.45; text-align: center; }
+.compra-sucesso, .compra-vazia { max-width: 620px; margin: 4rem auto; padding: 3.5rem 2rem; text-align: center; }
+.compra-sucesso h1, .compra-vazia h1 { margin-bottom: .75rem; }
+.compra-sucesso p:not(.etiqueta-secao), .compra-vazia p:not(.etiqueta-secao) { margin-bottom: 1.75rem; color: #806a58; }
+.icone-sucesso { display: grid; place-items: center; width: 4rem; height: 4rem; margin: 0 auto 1.25rem; border-radius: 50%; background: #6d9f86; color: #fff; font-size: 2rem; }
+@media (max-width: 820px) { .pagina-compra { margin: 1rem auto 3rem; padding: 1rem; } .layout-compra { grid-template-columns: 1fr; } .resumo-compra { position: static; order: -1; } }
+@media (max-width: 680px) { .grade-endereco { grid-template-columns: repeat(2, minmax(0, 1fr)); } .campo-cep, .campo-numero, .campo-bairro, .campo-cidade { grid-column: auto; } .campo-endereco, .campo-complemento { grid-column: 1 / -1; } .campo-estado { grid-column: auto; } }
+@media (max-width: 540px) { .cabecalho-compra { align-items: flex-start; } .etapa-atual small { display: none; } .bloco-compra, .resumo-compra { padding: 1.15rem; border-radius: 18px; } .grade-campos, .dados-cartao { grid-template-columns: 1fr; } .campo-largo, .campo-endereco, .campo-complemento { grid-column: auto; } .campo-cep, .campo-numero, .campo-bairro, .campo-cidade, .campo-estado { grid-column: auto; } .campo-pequeno { max-width: none; } }
