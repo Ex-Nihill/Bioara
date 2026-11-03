@@ -305,6 +305,10 @@ h1 {
     transform 0.2s ease;
 }
 
+.add-to-cart-button:hover {
+  background: rgba(218, 201, 116, 0.8);
+}
+
 .product-modal-backdrop {
   background: rgba(34, 26, 18, 0.45);
   padding: 1.5rem;
