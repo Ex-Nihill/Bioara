@@ -15,14 +15,43 @@ export class CarrinhoService {
   }
 
   itens = computed(() => this.carrinho());
-  public quantidade = computed(() => this.carrinho().length);
+  public quantidade = computed(() =>
+    this.carrinho().reduce((total, item) => total + (item.quantidade ?? 1), 0),
+  );
   public total = computed(() =>
-    this.carrinho().reduce((total, item) => total + item.preco, 0),
+    this.carrinho().reduce((total, item) => total + item.preco * (item.quantidade ?? 1), 0),
   );
   carrinhoVazio = computed(() => this.carrinho().length === 0);
 
   public adicionar(produto: ItemCarrinhoType) {
-    this.carrinho.update((lista) => [...lista, produto]);
+    this.carrinho.update((lista) => {
+      const itemExistente = lista.find(
+        (item) => item.nome === produto.nome && item.preco === produto.preco,
+      );
+
+      if (itemExistente) {
+        return lista.map((item) =>
+          item === itemExistente
+            ? { ...item, quantidade: (item.quantidade ?? 1) + (produto.quantidade ?? 1) }
+            : item,
+        );
+      }
+
+      return [...lista, { ...produto, quantidade: produto.quantidade ?? 1 }];
+    });
+  }
+
+  public diminuirQuantidade(produto: ItemCarrinhoType) {
+    this.carrinho.update((lista) =>
+      lista.flatMap((item) => {
+        if (item !== produto) {
+          return [item];
+        }
+
+        const quantidade = item.quantidade ?? 1;
+        return quantidade > 1 ? [{ ...item, quantidade: quantidade - 1 }] : [];
+      }),
+    );
   }
 
   public deletar(produto: ItemCarrinhoType) {
@@ -73,7 +102,20 @@ export class CarrinhoService {
     }
 
     try {
-      return JSON.parse(dadosSalvos) as ItemCarrinhoType[];
+      const itensSalvos = JSON.parse(dadosSalvos) as ItemCarrinhoType[];
+      return itensSalvos.reduce<ItemCarrinhoType[]>((itens, item) => {
+        const itemExistente = itens.find(
+          (atual) => atual.nome === item.nome && atual.preco === item.preco,
+        );
+        const quantidade = item.quantidade ?? 1;
+
+        if (itemExistente) {
+          itemExistente.quantidade = (itemExistente.quantidade ?? 1) + quantidade;
+          return itens;
+        }
+
+        return [...itens, { ...item, quantidade }];
+      }, []);
     } catch {
       return [];
     }

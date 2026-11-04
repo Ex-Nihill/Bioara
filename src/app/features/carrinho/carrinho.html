@@ -9,16 +9,37 @@
         <article class="item-carrinho">
           <div>
             <h3>{{ item.nome }}</h3>
-            <p>R$ {{ item.preco.toFixed(2) }}</p>
+            <p>R$ {{ item.preco.toFixed(2) }} cada</p>
           </div>
-          <button
-            mat-stroked-button
-            color="warn"
-            type="button"
-            (click)="carrinhoFacade.deletar(item)"
-          >
-            Remover
-          </button>
+          <div class="controles-item">
+            <div class="controle-quantidade" [attr.aria-label]="'Quantidade de ' + item.nome">
+              <button
+                mat-stroked-button
+                type="button"
+                [attr.aria-label]="'Diminuir quantidade de ' + item.nome"
+                (click)="carrinhoFacade.diminuirQuantidade(item)"
+              >
+                −
+              </button>
+              <span aria-live="polite">{{ item.quantidade ?? 1 }}</span>
+              <button
+                mat-stroked-button
+                type="button"
+                [attr.aria-label]="'Aumentar quantidade de ' + item.nome"
+                (click)="carrinhoFacade.adicionarProduto({ nome: item.nome, preco: item.preco })"
+              >
+                +
+              </button>
+            </div>
+            <button
+              mat-stroked-button
+              color="warn"
+              type="button"
+              (click)="carrinhoFacade.deletar(item)"
+            >
+              Remover
+            </button>
+          </div>
         </article>
       }
     </section>
