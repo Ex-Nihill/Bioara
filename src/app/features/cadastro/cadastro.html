@@ -34,7 +34,7 @@
               <input type="text" placeholder="nome" formControlName="nome"
             /></label>
             @if (formulario.get('nome')?.invalid && formulario.get('nome')?.touched) {
-              <span style="color: red">o nome deve ter no mínimo 6 caracteres</span>
+              <span style="color: red">o nome deve ter no mínimo 3 caracteres</span>
             }
           </div>
 
@@ -68,6 +68,12 @@
               <i class="fa-solid fa-unlock"></i>
               <input type="password" placeholder="confirmarSenha" formControlName="confirmarSenha"
             /></label>
+            @if (
+              formulario.get('confirmarSenha')?.touched &&
+              formulario.errors?.['senhaDiferente']
+            ) {
+              <span style="color: red">as senhas não conferem</span>
+            }
           </div>
 
           <div class="item-form">

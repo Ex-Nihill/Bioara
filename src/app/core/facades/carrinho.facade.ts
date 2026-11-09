@@ -18,6 +18,9 @@ export class CarrinhoFacade {
   adicionarProduto(produto: ItemCarrinhoType) {
     this.carrinhoService.adicionar(produto);
   }
+  diminuirQuantidade(produto: ItemCarrinhoType) {
+    this.carrinhoService.diminuirQuantidade(produto);
+  }
   // Ação de alto nível para limpar o carrinho.
   limparCarrinho() {
     this.carrinhoService.limpar();
