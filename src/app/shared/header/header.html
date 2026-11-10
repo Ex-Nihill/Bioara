@@ -1,3 +1,4 @@
+
 <mat-toolbar color="Secundary">
   <img src="logo.png" alt="logo" class="logo" />
   <div>
@@ -8,6 +9,8 @@
   <div>
     @if (getUsuarioLogado(); as usuario) {
       <button matButton routerLink="/conta"> <i class="fa-regular fa-user"></i></button>
+      <button matButton routerLink="/favoritos" aria-label="Favoritos">♡ Favoritos</button>
+      <button matButton routerLink="/minhas-compras">Minhas compras</button>
     } @else {
       <button matButton routerLink="/login">Login</button>
     }

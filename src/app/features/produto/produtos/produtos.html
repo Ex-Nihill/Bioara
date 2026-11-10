@@ -1,3 +1,4 @@
+
 <section class="produtos-page" [class.promocoes-page]="paginaPromocoes">
   @if (!paginaPromocoes) {
     <div class="banner">
@@ -46,6 +47,13 @@
       @for (produto of produtosExibidos; track produto.nome) {
         <article class="product-card" (click)="abrirDetalhes(produto)">
           <a class="offer-tag" routerLink="/promocoes">Oferta imperdível!</a>
+          <button
+            class="favorite-button"
+            type="button"
+            [class.favorite-active]="estaFavorito(produto)"
+            [attr.aria-label]="estaFavorito(produto) ? 'Remover dos favoritos' : 'Adicionar aos favoritos'"
+            (click)="alternarFavorito(produto, $event)"
+          >{{ estaFavorito(produto) ? '♥' : '♡' }}</button>
           <img [src]="produto.imagem" [alt]="produto.nome" />
           <div class="product-info">
             <p>{{ produto.categoria }}</p>
@@ -122,6 +130,11 @@
             </div>
             <span class="modal-original">{{ produtoSelecionado.precoOriginal }}</span>
           </div>
+          <button
+            type="button"
+            class="modal-favorite-button"
+            (click)="alternarFavorito(produtoSelecionado)"
+          >{{ estaFavorito(produtoSelecionado) ? '♥ Remover dos favoritos' : '♡ Adicionar aos favoritos' }}</button>
           <button
             type="button"
             class="modal-cart-button"

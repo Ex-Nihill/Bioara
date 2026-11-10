@@ -1,7 +1,9 @@
+
 import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CarrinhoFacade } from '../../core/facades/carrinho.facade';
+import { PedidosService } from '../../core/services/pedidos.service';
 
 @Component({
   selector: 'app-compra',
@@ -13,6 +15,7 @@ export class Compra implements OnDestroy {
   private readonly formBuilder = inject(FormBuilder);
   private readonly router = inject(Router);
   readonly carrinhoFacade = inject(CarrinhoFacade);
+  private readonly pedidosService = inject(PedidosService);
   readonly pedidoConfirmado = signal(false);
   private redirecionamentoId?: ReturnType<typeof setTimeout>;
 
@@ -37,6 +40,7 @@ export class Compra implements OnDestroy {
       return;
     }
 
+    this.pedidosService.registrarCompra(this.carrinhoFacade.itens());
     this.carrinhoFacade.limparCarrinho();
     this.pedidoConfirmado.set(true);
     this.redirecionamentoId = setTimeout(() => {
