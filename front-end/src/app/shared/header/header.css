@@ -1,0 +1,23 @@
+mat-toolbar{
+   display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background: transparent;
+    align-items: center;
+    div{
+        gap: 2px;
+    }
+.logo{
+    width: 5rem;
+    margin-right: 50px;
+}
+
+}
+
+.carrinho {
+   width: 20px;
+    
+}
+
+
+

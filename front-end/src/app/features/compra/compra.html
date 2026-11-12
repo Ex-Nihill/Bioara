@@ -1,0 +1,90 @@
+
+<section class="pagina-compra">
+	@if (pedidoConfirmado()) {
+		<section class="compra-sucesso" aria-live="polite">
+			<span class="icone-sucesso" aria-hidden="true">✓</span>
+			<p class="etiqueta-secao">Compra finalizada</p>
+			<h1>Compra confirmada!</h1>
+			<p>Seu pedido foi recebido com sucesso. Você será redirecionado para a página inicial.</p>
+		</section>
+	} @else if (carrinhoFacade.carrinhoVazio()) {
+		<section class="compra-vazia">
+			<p class="etiqueta-secao">Finalizar compra</p>
+			<h1>Seu carrinho está vazio</h1>
+			<p>Adicione alguns produtos antes de continuar para o checkout.</p>
+			<a class="botao botao-principal" routerLink="/produtos">Ver produtos</a>
+		</section>
+	} @else {
+		<header class="cabecalho-compra">
+			<div>
+				<p class="etiqueta-secao">Última etapa</p>
+				<h1>Finalizar compra</h1>
+				<p>Confira seus dados e escolha como deseja pagar.</p>
+			</div>
+		</header>
+
+		<form class="layout-compra" [formGroup]="formularioCompra" (ngSubmit)="finalizarCompra()">
+			<div class="coluna-formulario">
+				<section class="bloco-compra">
+					<div class="titulo-bloco">
+						<span class="numero-bloco">01</span>
+						<div><h2>Seus dados</h2><p>Usaremos estas informações para acompanhar a entrega.</p></div>
+					</div>
+					<div class="grade-campos grade-dados">
+						<label class="campo">Nome completo<input type="text" formControlName="nome" placeholder="Como podemos chamar você?" /></label>
+						<label class="campo">Telefone<input type="tel" formControlName="telefone" placeholder="(00) 00000-0000" /></label>
+					</div>
+				</section>
+
+				<section class="bloco-compra">
+					<div class="titulo-bloco">
+						<span class="numero-bloco">02</span>
+						<div><h2>Endereço de entrega</h2><p>Para onde devemos enviar seu pedido?</p></div>
+					</div>
+					<div class="grade-campos grade-endereco">
+						<label class="campo campo-cep">CEP<input type="text" formControlName="cep" placeholder="00000-000" /></label>
+						<label class="campo campo-endereco">Endereço<input type="text" formControlName="endereco" placeholder="Rua, avenida ou estrada" /></label>
+						<label class="campo campo-numero">Número<input type="text" formControlName="numero" placeholder="Nº" /></label>
+						<label class="campo campo-complemento">Complemento <span class="opcional">(opcional)</span><input type="text" formControlName="complemento" placeholder="Apartamento, bloco..." /></label>
+						<label class="campo campo-bairro">Bairro<input type="text" formControlName="bairro" placeholder="Seu bairro" /></label>
+						<label class="campo campo-cidade">Cidade<input type="text" formControlName="cidade" placeholder="Sua cidade" /></label>
+						<label class="campo campo-estado">UF<input type="text" maxlength="2" formControlName="estado" placeholder="SP" /></label>
+					</div>
+				</section>
+
+				<section class="bloco-compra">
+					<div class="titulo-bloco">
+						<span class="numero-bloco">03</span>
+						<div><h2>Forma de pagamento</h2><p>Selecione a opção mais conveniente para você.</p></div>
+					</div>
+					<div class="opcoes-pagamento">
+						<label class="opcao-pagamento"><input type="radio" formControlName="pagamento" value="pix" /><span><strong>Pix</strong><small>Pagamento instantâneo</small></span><b>◆</b></label>
+						<label class="opcao-pagamento"><input type="radio" formControlName="pagamento" value="cartao" /><span><strong>Cartão de crédito</strong><small>Até 3x sem juros</small></span><b>▣</b></label>
+						<label class="opcao-pagamento"><input type="radio" formControlName="pagamento" value="boleto" /><span><strong>Boleto bancário</strong><small>Vencimento em 3 dias</small></span><b>▤</b></label>
+					</div>
+					@if (formularioCompra.get('pagamento')?.value === 'cartao') {
+						<div class="dados-cartao">
+							<label class="campo campo-largo">Número do cartão<input type="text" formControlName="numeroCartao" placeholder="0000 0000 0000 0000" /></label>
+							<label class="campo">Validade<input type="text" formControlName="validade" placeholder="MM/AA" /></label>
+							<label class="campo">CVV<input type="text" formControlName="cvv" placeholder="000" /></label>
+						</div>
+					}
+				</section>
+			</div>
+
+			<aside class="resumo-compra">
+				<div class="resumo-topo"><p class="etiqueta-secao">Seu pedido</p><span>{{ carrinhoFacade.quantidade() }} itens</span></div>
+				<div class="itens-resumo">
+					@for (item of carrinhoFacade.itens(); track $index) {
+						<div class="item-resumo"><span>{{ item.nome }} <small>x{{ item.quantidade ?? 1 }}</small></span><strong>R$ {{ (item.preco * (item.quantidade ?? 1)).toFixed(2) }}</strong></div>
+					}
+				</div>
+				<div class="linha-resumo"><span>Subtotal</span><strong>R$ {{ carrinhoFacade.total().toFixed(2) }}</strong></div>
+				<div class="linha-resumo"><span>Entrega</span><strong class="entrega-gratis">Grátis</strong></div>
+				<div class="total-resumo"><span>Total</span><strong>R$ {{ carrinhoFacade.total().toFixed(2) }}</strong></div>
+				<button class="botao botao-principal botao-finalizar" type="submit">Confirmar pedido</button>
+				<p class="aviso-seguranca">🔒 Seus dados são protegidos e usados apenas para processar esta compra.</p>
+			</aside>
+		</form>
+	}
+</section>
