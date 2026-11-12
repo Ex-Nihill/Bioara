@@ -1,3 +1,4 @@
+
 .produtos-page {
   --brown: saddlebrown;
   --green: saddlebrown;
@@ -473,3 +474,9 @@ h1 {
     min-height: 14rem;
   }
 }
+
+
+/* Controles adicionados para a lista de favoritos. */
+.favorite-button { position: absolute; top: .45rem; right: .5rem; z-index: 2; width: 2.2rem; height: 2.2rem; border: 0; border-radius: 50%; background: rgba(255,253,250,.94); color: #6d9f86; font-size: 1.35rem; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
+.favorite-button.favorite-active { color: #a43d45; }
+.modal-favorite-button { width: 100%; margin-bottom: .65rem; padding: .8rem 1rem; border: 1px solid #6d9f86; border-radius: 999px; background: transparent; color: #4e311f; font: inherit; font-weight: 700; cursor: pointer; }

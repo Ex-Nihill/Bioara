@@ -1,0 +1,35 @@
+
+<section class="pagina-lista-bioara">
+  <header class="cabecalho-lista">
+    <p class="etiqueta-lista">Sua seleção especial</p>
+    <h1>Meus favoritos</h1>
+    <p>Os produtos que você guardou para sua rotina de autocuidado.</p>
+  </header>
+
+  @if (favoritosService.favoritos().length === 0) {
+    <section class="estado-vazio">
+      <span class="icone-vazio">♡</span>
+      <h2>Você ainda não tem favoritos</h2>
+      <p>Explore nossos produtos e toque no coração para guardar os seus preferidos.</p>
+      <a class="botao-bioara" routerLink="/produtos">Explorar produtos</a>
+    </section>
+  } @else {
+    <div class="grade-favoritos">
+      @for (produto of favoritosService.favoritos(); track produto.nome + produto.imagem) {
+        <article class="card-favorito">
+          <img [src]="produto.imagem" [alt]="produto.nome" />
+          <div class="info-favorito">
+            <p class="categoria-favorito">{{ produto.categoria }}</p>
+            <h2>{{ produto.nome }}</h2>
+            <p class="descricao-favorito">{{ produto.descricao }}</p>
+            <strong>{{ produto.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</strong>
+            <div class="acoes-favorito">
+              <button class="botao-bioara" type="button" (click)="adicionarAoCarrinho(produto)">Adicionar ao carrinho</button>
+              <button class="remover-favorito" type="button" (click)="favoritosService.remover(produto)" aria-label="Remover dos favoritos">♥ Remover</button>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  }
+</section>

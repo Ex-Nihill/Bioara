@@ -1,7 +1,10 @@
+
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CarrinhoFacade } from '../../../core/facades/carrinho.facade';
+import { FavoritosService } from '../../../core/services/favoritos.service';
+import { ProdutoLoja } from '../../../core/models/produto-loja';
 
 interface Produto {
   nome: string;
@@ -25,6 +28,7 @@ export class Produtos {
   mensagemCarrinho = '';
   mostrarTodosProdutos = false;
   private carrinhoFacade = inject(CarrinhoFacade);
+  readonly favoritosService = inject(FavoritosService);
   private cdr = inject(ChangeDetectorRef);
   private timeoutConfirmacao?: number;
   private router = inject(Router);
@@ -178,6 +182,25 @@ export class Produtos {
     this.termoBusca = this.termoBusca === nome ? '' : nome;
   }
 
+  produtoParaFavorito(produto: Produto): ProdutoLoja {
+    return {
+      nome: produto.nome,
+      categoria: produto.categoria,
+      preco: this.converterPreco(produto.preco),
+      imagem: produto.imagem,
+      descricao: `${produto.nome}: produto de ${produto.categoria.toLowerCase()}, desenvolvido para complementar sua rotina de autocuidado com uma proposta inspirada na natureza.`,
+    };
+  }
+
+  alternarFavorito(produto: Produto, evento?: Event): void {
+    evento?.stopPropagation();
+    this.favoritosService.alternar(this.produtoParaFavorito(produto));
+  }
+
+  estaFavorito(produto: Produto): boolean {
+    return this.favoritosService.estaFavorito(this.produtoParaFavorito(produto));
+  }
+
   abrirDetalhes(produto: Produto): void {
     this.produtoSelecionado = produto;
   }
@@ -196,6 +219,9 @@ export class Produtos {
     this.carrinhoFacade.adicionarProduto({
       nome: produto.nome,
       preco: this.converterPreco(produto.preco),
+      imagem: produto.imagem,
+      categoria: produto.categoria,
+      descricao: this.produtoParaFavorito(produto).descricao,
     });
     this.mostrarConfirmacaoCarrinho(produto);
     this.fecharDetalhes();
