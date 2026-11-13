@@ -1,0 +1,42 @@
+
+<section class="pagina-lista-bioara">
+  <header class="cabecalho-lista">
+    <p class="etiqueta-lista">Acompanhe seus pedidos</p>
+    <h1>Minhas compras</h1>
+    <p>Consulte seus pedidos, valores e previsão de entrega.</p>
+  </header>
+
+  @if (pedidosService.pedidos().length === 0) {
+    <section class="estado-vazio">
+      <span class="icone-vazio">▤</span>
+      <h2>Você ainda não realizou compras</h2>
+      <p>Quando finalizar um pedido, os detalhes e a previsão de entrega aparecerão aqui.</p>
+      <a class="botao-bioara" routerLink="/produtos">Conhecer produtos</a>
+    </section>
+  } @else {
+    <div class="lista-pedidos">
+      @for (pedido of pedidosService.pedidos(); track pedido.id) {
+        <article class="pedido-card">
+          <header class="pedido-topo">
+            <div><p class="categoria-favorito">Pedido {{ pedido.id }}</p><h2>{{ pedido.status }}</h2></div>
+            <strong class="total-pedido">{{ formatarPreco(pedido.total) }}</strong>
+          </header>
+          <div class="datas-pedido">
+            <p><span>Data da compra</span><strong>{{ formatarData(pedido.dataCompra) }}</strong></p>
+            <p><span>Previsão de entrega</span><strong>{{ formatarData(pedido.previsaoEntrega) }}</strong></p>
+          </div>
+          <div class="itens-pedido">
+            @for (item of pedido.itens; track $index) {
+              <article class="item-pedido">
+                <img [src]="item.imagem" [alt]="item.nome" />
+                <div class="detalhes-item"><h3>{{ item.nome }}</h3><p>{{ item.descricao }}</p><small>Quantidade: {{ item.quantidade }}</small></div>
+                <strong>{{ formatarPreco(item.preco * item.quantidade) }}</strong>
+              </article>
+            }
+          </div>
+          <p class="aviso-entrega">A previsão é estimada e pode variar conforme a transportadora.</p>
+        </article>
+      }
+    </div>
+  }
+</section>
