@@ -1,7 +1,8 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatAnchor } from '@angular/material/button';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CarrinhoFacade } from '../../../core/facades/carrinho.facade';
+import { ProdutoLoja } from '../../../core/models/produto-loja';
+import { FavoritosService } from '../../../core/services/favoritos.service';
 
 interface Produto {
   nome: string;
@@ -14,7 +15,7 @@ interface Produto {
 
 @Component({
   selector: 'app-produtos-home',
-  imports: [MatAnchor],
+  imports: [RouterLink],
   templateUrl: './produtos-home.html',
   styleUrl: './produtos-home.css',
 })
@@ -24,6 +25,7 @@ export class ProdutosHome {
   produtoSelecionado: Produto | null = null;
   mensagemCarrinho = '';
   private carrinhoFacade = inject(CarrinhoFacade);
+  readonly favoritosService = inject(FavoritosService);
   private cdr = inject(ChangeDetectorRef);
   private timeoutConfirmacao?: number;
   private router = inject(Router);
@@ -132,6 +134,25 @@ export class ProdutosHome {
   }
   obterEstrelas(avaliacao: number): string {
     return `${'★'.repeat(Math.round(avaliacao))}${'☆'.repeat(5 - Math.round(avaliacao))}`;
+  }
+
+  produtoParaFavorito(produto: Produto): ProdutoLoja {
+    return {
+      nome: produto.nome,
+      categoria: produto.categoria,
+      preco: this.converterPreco(produto.preco),
+      imagem: produto.imagem,
+      descricao: `${produto.nome}: produto de ${produto.categoria.toLowerCase()}, desenvolvido para complementar sua rotina de autocuidado com uma proposta inspirada na natureza.`,
+    };
+  }
+
+  alternarFavorito(produto: Produto, evento?: Event): void {
+    evento?.stopPropagation();
+    this.favoritosService.alternar(this.produtoParaFavorito(produto));
+  }
+
+  estaFavorito(produto: Produto): boolean {
+    return this.favoritosService.estaFavorito(this.produtoParaFavorito(produto));
   }
 
   mostrarConfirmacaoCarrinho(produto: Produto): void {
